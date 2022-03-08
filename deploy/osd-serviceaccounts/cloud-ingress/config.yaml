@@ -1,8 +1,10 @@
 deploymentMode: "SelectorSyncSet"
 selectorSyncSet:
-  matchLabels:
-    ext-managed.openshift.io/hive-shard: "true"
+  resourceApplyMode: Upsert
   matchExpressions:
+  - key: api.openshift.com/sts
+    operator: NotIn
+    values: ["true"]
   - key: api.openshift.com/fedramp
     operator: NotIn
     values:

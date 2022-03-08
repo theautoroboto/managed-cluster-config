@@ -10381,7 +10381,7 @@ objects:
       managed.openshift.io/gitHash: ${IMAGE_TAG}
       managed.openshift.io/gitRepoName: ${REPO_NAME}
       managed.openshift.io/osd: 'true'
-    name: osd-serviceaccounts
+    name: osd-serviceaccounts-alertmanager
   spec:
     clusterDeploymentSelector:
       matchLabels:
@@ -10396,33 +10396,8 @@ objects:
     - apiVersion: v1
       kind: ServiceAccount
       metadata:
-        name: cloud-ingress-operator
-        namespace: openshift-cloud-ingress-operator
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: managed-upgrade-operator
-        namespace: openshift-managed-upgrade-operator
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
         name: configure-alertmanager-operator
         namespace: openshift-monitoring
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: rbac-permissions-operator
-        namespace: openshift-rbac-permissions
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: splunk-forwarder-operator
-        namespace: openshift-splunk-forwarder-operator
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: managed-velero-operator
-        namespace: openshift-velero
 - apiVersion: hive.openshift.io/v1
   kind: SelectorSyncSet
   metadata:
@@ -10448,6 +10423,34 @@ objects:
       metadata:
         name: custom-domains-operator
         namespace: openshift-custom-domains-operator
+- apiVersion: hive.openshift.io/v1
+  kind: SelectorSyncSet
+  metadata:
+    labels:
+      managed.openshift.io/gitHash: ${IMAGE_TAG}
+      managed.openshift.io/gitRepoName: ${REPO_NAME}
+      managed.openshift.io/osd: 'true'
+    name: osd-serviceaccounts-cloud-ingress
+  spec:
+    clusterDeploymentSelector:
+      matchLabels:
+        api.openshift.com/managed: 'true'
+      matchExpressions:
+      - key: api.openshift.com/sts
+        operator: NotIn
+        values:
+        - 'true'
+      - key: api.openshift.com/fedramp
+        operator: NotIn
+        values:
+        - 'true'
+    resourceApplyMode: Upsert
+    resources:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: cloud-ingress-operator
+        namespace: openshift-cloud-ingress-operator
 - apiVersion: hive.openshift.io/v1
   kind: SelectorSyncSet
   metadata:
@@ -10541,6 +10544,34 @@ objects:
       managed.openshift.io/gitHash: ${IMAGE_TAG}
       managed.openshift.io/gitRepoName: ${REPO_NAME}
       managed.openshift.io/osd: 'true'
+    name: osd-serviceaccounts-managed-upgrade
+  spec:
+    clusterDeploymentSelector:
+      matchLabels:
+        api.openshift.com/managed: 'true'
+      matchExpressions:
+      - key: api.openshift.com/sts
+        operator: NotIn
+        values:
+        - 'true'
+      - key: api.openshift.com/fedramp
+        operator: NotIn
+        values:
+        - 'true'
+    resourceApplyMode: Upsert
+    resources:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: managed-upgrade-operator
+        namespace: openshift-managed-upgrade-operator
+- apiVersion: hive.openshift.io/v1
+  kind: SelectorSyncSet
+  metadata:
+    labels:
+      managed.openshift.io/gitHash: ${IMAGE_TAG}
+      managed.openshift.io/gitRepoName: ${REPO_NAME}
+      managed.openshift.io/osd: 'true'
     name: osd-serviceaccounts-oao
   spec:
     clusterDeploymentSelector:
@@ -10563,6 +10594,54 @@ objects:
       metadata:
         name: ocm-agent-operator
         namespace: openshift-ocm-agent-operator
+- apiVersion: hive.openshift.io/v1
+  kind: SelectorSyncSet
+  metadata:
+    labels:
+      managed.openshift.io/gitHash: ${IMAGE_TAG}
+      managed.openshift.io/gitRepoName: ${REPO_NAME}
+      managed.openshift.io/osd: 'true'
+    name: osd-serviceaccounts-rbac-permissions
+  spec:
+    clusterDeploymentSelector:
+      matchLabels:
+        api.openshift.com/managed: 'true'
+      matchExpressions:
+      - key: api.openshift.com/sts
+        operator: NotIn
+        values:
+        - 'true'
+    resourceApplyMode: Upsert
+    resources:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: rbac-permissions-operator
+        namespace: openshift-rbac-permissions
+- apiVersion: hive.openshift.io/v1
+  kind: SelectorSyncSet
+  metadata:
+    labels:
+      managed.openshift.io/gitHash: ${IMAGE_TAG}
+      managed.openshift.io/gitRepoName: ${REPO_NAME}
+      managed.openshift.io/osd: 'true'
+    name: osd-serviceaccounts-splunk
+  spec:
+    clusterDeploymentSelector:
+      matchLabels:
+        api.openshift.com/managed: 'true'
+      matchExpressions:
+      - key: api.openshift.com/sts
+        operator: NotIn
+        values:
+        - 'true'
+    resourceApplyMode: Upsert
+    resources:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: splunk-forwarder-operator
+        namespace: openshift-splunk-forwarder-operator
 - apiVersion: hive.openshift.io/v1
   kind: SelectorSyncSet
   metadata:
@@ -10606,6 +10685,34 @@ objects:
       metadata:
         name: splunk-forwarder-operator
         namespace: openshift-splunk-forwarder-operator
+- apiVersion: hive.openshift.io/v1
+  kind: SelectorSyncSet
+  metadata:
+    labels:
+      managed.openshift.io/gitHash: ${IMAGE_TAG}
+      managed.openshift.io/gitRepoName: ${REPO_NAME}
+      managed.openshift.io/osd: 'true'
+    name: osd-serviceaccounts-velro
+  spec:
+    clusterDeploymentSelector:
+      matchLabels:
+        api.openshift.com/managed: 'true'
+      matchExpressions:
+      - key: api.openshift.com/sts
+        operator: NotIn
+        values:
+        - 'true'
+      - key: api.openshift.com/fedramp
+        operator: NotIn
+        values:
+        - 'true'
+    resourceApplyMode: Upsert
+    resources:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: managed-velero-operator
+        namespace: openshift-velero
 - apiVersion: hive.openshift.io/v1
   kind: SelectorSyncSet
   metadata:
@@ -13863,6 +13970,11 @@ objects:
       matchLabels:
         api.openshift.com/managed: 'true'
         ext-managed.openshift.io/hive-shard: 'true'
+      matchExpressions:
+      - key: api.openshift.com/fedramp
+        operator: NotIn
+        values:
+        - 'true'
     resourceApplyMode: Sync
     resources:
     - apiVersion: rbac.authorization.k8s.io/v1
